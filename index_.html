@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+	<head>
+		<meta charset="utf-8">
+		<title>薇数据</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="xinlinqi">
+		<!-- Le styles -->
+		
+	<!-- 	<link href="CSS/bootstrap.css" rel="stylesheet">
+		<link href="CSS/bootstrap-responsive.css" rel="stylesheet"> -->
+		
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+		</style>
+		<link href="CSS/main.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+		
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="../assets/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<!-- Fav and touch icons -->
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+		<link rel="shortcut icon" href="../assets/ico/favicon.png">
+	</head>
+
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="#">薇数据</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="active">
+								<a href="#">Home</a>
+							</li>
+							<li><a>
+								<wb:login-button type="3,2" ></wb:login-button>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">
+									剩余调用次数：
+									<span id="rest_time"> </span>
+								</a>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="input-append container">
+				<input type="text" class="span10" placeholder="请输入一条微博的ID，如微博链接为http://weibo.com/1517951131/zA4tbiqIz，则输入zA4tbiqIz" id="mid" value="zzZfGsX70"/>
+				<button class="btn" type="button" id="s_btn">获取微博信息</button>
+			</div>
+			<!--
+			<div class="" id="w-container" style="display: none;">
+				<ul id="weitab" class="nav nav-tabs">
+					<li class="active">
+						<a href="#profile" data-toggle="tab">微博信息</a>
+					</li>
+					<li >
+						<a href="#comment" data-toggle="tab" id="comment-title">评论列表</a>
+					</li>
+					<li>
+						<a href="#repost" data-toggle="tab" id="repost-title">转发列表</a>
+					</li>
+					<li class="">
+						<a href="#export" data-toggle="tab">导出转发列表</a>
+					</li>					
+				</ul>
+				<div id="weibo-content" class="tab-content">
+					<div class="tab-pane active dynamic" id="profile">
+						
+					</div>
+					<div class="tab-pane reposts dynamic" id="repost">
+						
+					</div>
+					<div class="tab-pane comments dynamic" id="comment">
+						
+					</div>
+					<div class="tab-pane" id="export">
+						<div class="toolbar">
+							<button class="btn btn-primary" id="export-reposts">开始导出转发列表</button>
+							共有<strong>1</strong>页，正在导出第<strong></strong>页
+						</div>
+						
+						<a download="somedata.txt" href="data:text/plain;charset=utf-8,测试%2CCol2%2CCol3%0AVal1%2CVal2%2CVal3%0AVal11%2CVal22%2CVal33%0AVal111%2CVal222%2CVal333">Example</a>
+						<a download="somedata.txt" href="data:text/plain;charset=utf-8,测试|Col2|Col3%0AVal1Val2%2CVal3%0AVal11%2CVal22%2CVal33%0AVal111%2CVal222%2CVal333">Example</a>
+						<pre>
+都晒得hi
+						</pre>
+					</div>					
+				</div>
+			</div>
+			-->
+			<div id="w-container">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>层次</th>
+							<th>关注数</th>
+							<th>粉丝数</th>
+							<th>微博数</th>
+							<th>内容</th>
+							<th>评论数</th>
+							<th>点赞数</th>
+							<th>转发者列表</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		<script type="text/plain" id="comment-tpl">
+			{content}
+			<ul class="pager">
+				<button class="previous btn btn-primary">
+					&larr; 上一页
+				</button>
+				第<span ></span>页
+				<button class="next btn btn-primary">
+					下一页&rarr;
+				</button>
+			</ul>			
+		</script>
+		
+		<script type="text/plain" id="comment-item-tpl">
+			<div class="comment-item">
+				<strong>@{commenter}:</strong>
+				{comment-content}
+			</div>			
+		</script>
+
+		<script type="text/plain" id="repost-item-tpl">
+			<div class="repost-item">
+				<strong>@{reposter}:</strong>
+				{repost-content}
+				<strong>{repost-date}</strong>
+			</div>			
+		</script>
+		
+		<script type="text/plain" id="profile-tpl">
+			<div class="container-fluid">
+  				<div class="row">
+					<div class="span4" >
+						<div class="profile-header" style="margin: 0 auto;">
+							<a href="javascript:void(0);" class="profile-avatar">
+								<img src="{profile_image_url}" />
+							</a>
+							<div class="text-center">
+								<p>@{screen_name}</p>
+								<p>{description}</p>
+							</div>
+						</div>
+						<div class="profile-footer">
+							<span>
+								<strong>{follower_count}</strong>
+									关注
+							</span>|
+							<span>
+								<strong>{friends_count}</strong>
+								粉丝
+							</span>|
+							<span>
+								<strong>{statuses_count}</strong>
+								微博
+							</span>
+						</div>
+					</div>
+					<div class="span6" >
+						<div class="weibo">
+							{text}
+						</div>
+						<div class="weibo retweeted">
+							<p class="weibo-header">
+								@{retweeter}
+							</p>							
+							{retweeted-text}
+						</div>
+						<div class="clearfix"></div>
+						<div id="weibo_pics" class="pics"></div>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/plain" id="export-tr">
+			<tr id="wei_{id}">
+				<td>{id}</td>
+				<td>{level}</td>
+				<td>{friends_count}</td>
+				<td>{followers_count}</td>
+				<td>{statuses_count}</td>
+				<td>{text}</td>
+				<td>{comments_count}</td>
+				<td>{attitudes_count}</td>
+				<td>{repost_list}</td>
+			</tr>
+		</script>
+		
+		<!-- /container -->
+		<!-- Le javascript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+		<script src="JS/bootstrap.min.js"></script>
+		<!-- <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3698181491" type="text/javascript" charset="utf-8"></script> -->
+		<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1739952346" type="text/javascript" charset="utf-8"></script>
+		<!-- <script src="JS/bootstrap-tab.js"></script> -->
+		<!--<script src="JS/main.js"></script>-->
+		<script src="JS/export.js"></script>
+	</body>
+</html>
